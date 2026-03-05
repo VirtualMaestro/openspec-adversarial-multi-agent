@@ -9,7 +9,7 @@ disable-model-invocation: true
 Set CHANGE_PATH = $ARGUMENTS (normalize: replace backslashes with forward slashes)
 Set CHANGE_NAME = last segment of CHANGE_PATH
   (e.g. "openspec/changes/platform-integration" → "platform-integration")
-Set REVIEW_DIR = /tmp/openspec-review-change/$CHANGE_NAME
+Set REVIEW_DIR = $CHANGE_PATH/.review
 
 Verify the following files exist, abort with error if any missing:
 - $CHANGE_PATH/proposal.md
@@ -120,11 +120,4 @@ If decision is STOP: explain why implementation should not proceed
 
 ---
 
-## Cleanup and Preservation
-
-Preserve critique files for audit trail:
-Run: mkdir -p $CHANGE_PATH/.review
-Run: cp -r $REVIEW_DIR/* $CHANGE_PATH/.review/
-Run: rm -rf $REVIEW_DIR
-
-The critique files and verdict are now preserved in $CHANGE_PATH/.review/ for future reference.
+The critique files and verdict are preserved in $CHANGE_PATH/.review/ for future reference.
