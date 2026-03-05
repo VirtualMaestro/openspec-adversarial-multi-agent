@@ -18,6 +18,26 @@ You review ONLY the WHY and WHAT of this change. Do not comment on:
 - Whether specs are complete (that's specs/)
 - Whether tasks are realistic (that's tasks.md)
 
+## Severity Definitions
+
+**CRITICAL (blocks implementation):**
+- Fundamental design flaw that makes implementation impossible or dangerous
+- Direct contradiction with existing specs that cannot be resolved
+- Missing required artifact or section
+- Problem statement is wrong or unsolvable
+
+**MAJOR (should fix before /opsx:apply):**
+- Implementation can proceed but will likely fail or require significant rework
+- Missing error handling, edge cases, or important requirements
+- Task ordering issues that will cause implementation to stall
+- Unclear requirements open to multiple interpretations
+
+**MINOR (worth considering):**
+- Implementation can succeed but could be improved
+- Alternative approach worth evaluating
+- Edge case not covered but unlikely to occur
+- Style or clarity improvements
+
 ## When invoked
 
 You will receive CHANGE_PATH and REVIEW_DIR in your prompt.
@@ -47,16 +67,14 @@ Write to $REVIEW_DIR/critique-proposal.md:
 # Proposal Critique
 
 ## CRITICAL (blocks implementation)
-- [issue]: [specific evidence — quote section or describe content]
+- [issue]: [evidence from artifact] — [why this is a problem]
 
 ## MAJOR (should fix before /opsx:apply)
-- [issue]: [specific evidence]
+- [issue]: [evidence from artifact] — [why this is a problem]
 
 ## MINOR (worth considering)
-- [issue]: [specific evidence]
+- [issue]: [evidence from artifact] — [why this is a problem]
 
 ## No Issues Found
 (use this section only if genuinely clean)
 ```
-
-After writing the file, output to console: "PROPOSAL CRITIQUE COMPLETE"
