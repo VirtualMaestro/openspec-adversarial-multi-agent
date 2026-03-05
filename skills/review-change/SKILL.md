@@ -1,8 +1,8 @@
 ---
-name: opsx-review
+name: opsx:review-change
 description: Adversarial review of OpenSpec change artifacts before implementation.
              Runs five parallel critics (proposal, design, specs, tasks, consistency), then
-             synthesizes a verdict. Usage: /opsx:review <path-to-change>
+             synthesizes a verdict. Usage: /opsx:review-change <path-to-change>
 disable-model-invocation: true
 ---
 
@@ -11,7 +11,7 @@ disable-model-invocation: true
 Set CHANGE_PATH = $ARGUMENTS (normalize: replace backslashes with forward slashes)
 Set CHANGE_NAME = last segment of CHANGE_PATH
   (e.g. "openspec/changes/platform-integration" → "platform-integration")
-Set REVIEW_DIR = /tmp/opsx-review/$CHANGE_NAME
+Set REVIEW_DIR = /tmp/review-change/$CHANGE_NAME
 
 Verify the following files exist, abort with error if any missing:
 - $CHANGE_PATH/proposal.md

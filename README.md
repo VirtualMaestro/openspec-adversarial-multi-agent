@@ -38,7 +38,8 @@ Each critic independently analyzes the change artifacts and provides targeted fe
    ```
    .claude/
    ├── skills/
-   │   └── opsx-review.md
+   │   └── review-change/
+   │       └── SKILL.md
    ```
 
 ## Expected Directory Structure
@@ -68,7 +69,8 @@ your-project/
     ├── agents/
     │   └── opsx-critic-*.md
     └── skills/
-        └── opsx-review.md
+        └── review-change/
+            └── SKILL.md
 ```
 
 ## Usage
@@ -78,7 +80,7 @@ your-project/
 In Claude Code, invoke the review skill with the path to your change:
 
 ```
-/opsx:review openspec/changes/my-change
+/opsx:review-change openspec/changes/my-change
 ```
 
 The system will:
@@ -92,7 +94,7 @@ The system will:
 ### Example Workflow
 
 ```
-User: /opsx:review openspec/changes/platform-integration
+User: /opsx:review-change openspec/changes/platform-integration
 
 [System validates artifacts]
 ✓ proposal.md exists and is non-empty
@@ -146,7 +148,7 @@ All detailed critique files are preserved in `.review/` for reference.
 
 ### "Cannot find artifact files"
 - Ensure your change directory contains: proposal.md, design.md, specs/, tasks.md
-- Check that you're providing the correct path to /opsx:review
+- Check that you're providing the correct path to /opsx:review-change
 - Verify file names match exactly (case-sensitive)
 
 ### "Artifact is empty"
@@ -166,7 +168,7 @@ All detailed critique files are preserved in `.review/` for reference.
 - Verify file names match exactly
 
 ### "Skill not recognized"
-- Ensure `skills/opsx-review.md` is in `.claude/skills/`
+- Ensure `skills/review-change/SKILL.md` is in `.claude/skills/`
 - Restart Claude Code to reload skills
 - Check skill file syntax and YAML frontmatter
 
@@ -180,7 +182,7 @@ All detailed critique files are preserved in `.review/` for reference.
 
 ### Adjusting Verdict Criteria
 
-Edit `skills/opsx-review.md` Phase 2 to modify decision rules:
+Edit `skills/review-change/SKILL.md` Phase 2 to modify decision rules:
 - Change thresholds for GO/REVISE/STOP verdicts
 - Adjust confidence calculation logic
 - Modify VALID vs NOISE classification guidance
@@ -191,7 +193,7 @@ Create a new critic agent in `.claude/agents/`:
 1. Follow the existing critic format (YAML frontmatter, scope, severity definitions)
 2. Define what the critic reviews and what it ignores
 3. Specify evidence citation format
-4. Update `skills/opsx-review.md` Phase 1 to launch the new critic
+4. Update `skills/review-change/SKILL.md` Phase 1 to launch the new critic
 5. Update Phase 2 to read the new critique file
 
 ### Modifying Severity Definitions
