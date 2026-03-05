@@ -29,54 +29,27 @@ Run: mkdir -p $REVIEW_DIR
 
 ## Phase 1 — Parallel critique (all five in background)
 
-Launch all five critics simultaneously using the Agent tool with run_in_background: true
+Launch five critic agents in parallel to review the change artifacts. All agents should run in the background so they execute simultaneously.
 
-**Critic 1 — Proposal**
-```
-Agent tool:
-  subagent_type: "opsx-critic-proposal"
-  prompt: "Review the change at $CHANGE_PATH. Write your findings to $REVIEW_DIR/critique-proposal.md"
-  run_in_background: true
-  description: "Critique proposal"
-```
+**Critics to launch:**
 
-**Critic 2 — Design**
-```
-Agent tool:
-  subagent_type: "opsx-critic-design"
-  prompt: "Review the change at $CHANGE_PATH. Write your findings to $REVIEW_DIR/critique-design.md"
-  run_in_background: true
-  description: "Critique design"
-```
+1. **Proposal Critic** (opsx-critic-proposal): Review the change at $CHANGE_PATH and write findings to $REVIEW_DIR/critique-proposal.md
 
-**Critic 3 — Specs**
-```
-Agent tool:
-  subagent_type: "opsx-critic-specs"
-  prompt: "Review the change at $CHANGE_PATH. Write your findings to $REVIEW_DIR/critique-specs.md"
-  run_in_background: true
-  description: "Critique specs"
-```
+2. **Design Critic** (opsx-critic-design): Review the change at $CHANGE_PATH and write findings to $REVIEW_DIR/critique-design.md
 
-**Critic 4 — Tasks**
-```
-Agent tool:
-  subagent_type: "opsx-critic-tasks"
-  prompt: "Review the change at $CHANGE_PATH. Write your findings to $REVIEW_DIR/critique-tasks.md"
-  run_in_background: true
-  description: "Critique tasks"
-```
+3. **Specs Critic** (opsx-critic-specs): Review the change at $CHANGE_PATH and write findings to $REVIEW_DIR/critique-specs.md
 
-**Critic 5 — Consistency**
-```
-Agent tool:
-  subagent_type: "opsx-critic-consistency"
-  prompt: "Review the change at $CHANGE_PATH. Write your findings to $REVIEW_DIR/critique-consistency.md"
-  run_in_background: true
-  description: "Critique consistency"
-```
+4. **Tasks Critic** (opsx-critic-tasks): Review the change at $CHANGE_PATH and write findings to $REVIEW_DIR/critique-tasks.md
+
+5. **Consistency Critic** (opsx-critic-consistency): Review the change at $CHANGE_PATH and write findings to $REVIEW_DIR/critique-consistency.md
+
+**Execution:**
+- Launch all five agents with run_in_background enabled
+- Each agent should receive the full change path and output file path in its prompt
+- Use descriptive labels for each agent launch (e.g., "Critique proposal", "Critique design")
 
 **Wait for completion:**
+
 Poll for all five critique files to exist with a 5-minute timeout per critic:
 - $REVIEW_DIR/critique-proposal.md
 - $REVIEW_DIR/critique-design.md
