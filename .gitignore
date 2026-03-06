@@ -23,3 +23,6 @@ coverage/
 
 # Exclude npm package tarballs
 *.tgz
+
+# Exclude local .claude directory (created during testing)
+.claude/

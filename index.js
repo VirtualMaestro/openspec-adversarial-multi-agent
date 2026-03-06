@@ -2,10 +2,9 @@
 
 const fs = require('fs');
 const path = require('path');
-const os = require('os');
 
-// Find .claude directory
-const claudeDir = path.join(os.homedir(), '.claude');
+// Install to project's .claude directory (local installation)
+const claudeDir = path.join(process.cwd(), '.claude');
 
 try {
   // Create directories if needed
@@ -47,7 +46,8 @@ try {
   fs.copyFileSync(skillFile, skillTarget);
   console.log('✓ Copied skill: openspec-review-change/SKILL.md');
 
-  console.log('\n✓ OpenSpec plugin installed to ~/.claude/');
+  console.log('\n✓ OpenSpec plugin installed to ./.claude/');
+  console.log('  (Local installation in current project)');
   console.log('\nUsage in Claude Code:');
   console.log('  /openspec-review-change <path>');
   console.log('\nExample:');
@@ -56,7 +56,8 @@ try {
 } catch (error) {
   console.error('\n✗ Installation failed:', error.message);
   console.error('\nTroubleshooting:');
-  console.error('  - Ensure you have write permissions to ~/.claude/');
+  console.error('  - Ensure you have write permissions in the current directory');
+  console.error('  - Run this command from your project root directory');
   console.error('  - Check that the source files exist in the package');
   process.exit(1);
 }

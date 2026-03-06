@@ -24,38 +24,43 @@ Each critic independently analyzes the change artifacts and provides targeted fe
 
 ### Quick Install (Recommended)
 
-Run the NPX installer to automatically copy files to your `.claude/` directory:
+Run the NPX installer from your project root to install locally:
 
 ```bash
+cd /path/to/your/project
 npx openspec-adversarial-multi-agent
 ```
 
-This will install:
-- 5 critic agent files to `~/.claude/agents/`
-- 1 skill file to `~/.claude/skills/openspec-review-change/`
+This will install to your project's `.claude/` directory:
+- 5 critic agent files to `./.claude/agents/`
+- 1 skill file to `./.claude/skills/openspec-review-change/`
+
+**Note:** This is a local installation per project, not global. Each project gets its own copy.
 
 ### Manual Installation
 
 If you prefer manual installation or the NPX method doesn't work:
 
 1. Clone this repository
-2. Copy the `agents/` folder contents to your `.claude/agents/` directory:
+2. Copy the `agents/` folder contents to your project's `.claude/agents/` directory:
    ```
-   .claude/
-   ├── agents/
-   │   ├── opsx-critic-proposal.md
-   │   ├── opsx-critic-design.md
-   │   ├── opsx-critic-specs.md
-   │   ├── opsx-critic-tasks.md
-   │   └── opsx-critic-consistency.md
+   your-project/
+   └── .claude/
+       ├── agents/
+       │   ├── opsx-critic-proposal.md
+       │   ├── opsx-critic-design.md
+       │   ├── opsx-critic-specs.md
+       │   ├── opsx-critic-tasks.md
+       │   └── opsx-critic-consistency.md
    ```
 
-3. Copy the `skills/` folder contents to your `.claude/skills/` directory:
+3. Copy the `skills/` folder contents to your project's `.claude/skills/` directory:
    ```
-   .claude/
-   ├── skills/
-   │   └── openspec-review-change/
-   │       └── SKILL.md
+   your-project/
+   └── .claude/
+       ├── skills/
+       │   └── openspec-review-change/
+       │       └── SKILL.md
    ```
 
 ## Expected Directory Structure
