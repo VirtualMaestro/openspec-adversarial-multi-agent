@@ -20,3 +20,6 @@ Thumbs.db
 # Exclude test artifacts
 test-output/
 coverage/
+
+# Exclude npm package tarballs
+*.tgz
