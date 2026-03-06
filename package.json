@@ -1,6 +1,6 @@
 {
   "name": "openspec-adversarial-multi-agent",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Claude Code plugin for adversarial OpenSpec review",
   "bin": {
     "openspec-adversarial-multi-agent": "index.js"
@@ -8,7 +8,8 @@
   "files": [
     "index.js",
     "agents",
-    "skills"
+    "skills",
+    "README.md"
   ],
   "keywords": [
     "claude-code",
