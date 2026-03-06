@@ -2,7 +2,7 @@
 name: opsx-critic-design
 description: Adversarial critic for OpenSpec design.md artifacts.
              Use when reviewing technical design before implementation.
-tools: Read, Glob, Grep
+tools: Read, Glob, Grep, Write
 model: inherit
 ---
 

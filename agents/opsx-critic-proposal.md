@@ -2,7 +2,7 @@
 name: opsx-critic-proposal
 description: Adversarial critic for OpenSpec proposal.md artifacts.
              Use when reviewing the rationale and scope of a change before implementation.
-tools: Read, Glob, Grep
+tools: Read, Glob, Grep, Write
 model: inherit
 ---
 

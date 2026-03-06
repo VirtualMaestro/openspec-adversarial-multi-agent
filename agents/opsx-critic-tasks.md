@@ -2,7 +2,7 @@
 name: opsx-critic-tasks
 description: Adversarial critic for OpenSpec tasks.md before implementation.
              Use when reviewing implementability and completeness of a task plan.
-tools: Read, Glob, Grep
+tools: Read, Glob, Grep, Write
 model: inherit
 ---
 

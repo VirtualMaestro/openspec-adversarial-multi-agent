@@ -2,7 +2,7 @@
 name: opsx-critic-consistency
 description: Adversarial critic for cross-artifact consistency in OpenSpec changes.
              Use when reviewing alignment between proposal, design, specs, and tasks.
-tools: Read, Glob, Grep
+tools: Read, Glob, Grep, Write
 model: inherit
 ---
 

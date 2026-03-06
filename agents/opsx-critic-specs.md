@@ -2,7 +2,7 @@
 name: opsx-critic-specs
 description: Adversarial critic for OpenSpec delta specs before implementation.
              Use when reviewing requirement completeness and spec conflicts.
-tools: Read, Glob, Grep
+tools: Read, Glob, Grep, Write
 model: inherit
 ---
 
