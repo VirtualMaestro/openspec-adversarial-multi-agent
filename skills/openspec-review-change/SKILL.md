@@ -31,9 +31,9 @@ Run: mkdir -p $REVIEW_DIR
 
 ---
 
-## Phase 1 — Parallel critique (conditional launch based on available artifacts)
+## Phase 1 — Red Team Critique (conditional launch based on available artifacts)
 
-Launch critic agents in parallel to review the change artifacts. All agents should run in the background so they execute simultaneously.
+Launch red team critic agents in parallel to review the change artifacts. All agents should run in the background so they execute simultaneously.
 
 **Critics to launch (conditionally):**
 
@@ -69,7 +69,7 @@ Poll for critique files to exist with a 5-minute timeout per critic. Only wait f
 
 ---
 
-## Phase 2 — Verdict (main agent)
+## Phase 2 — Blue Team Verdict (main agent)
 
 Read critique files that were generated (only read files from critics that were launched):
 - $REVIEW_DIR/critique-proposal.md (always read)
@@ -78,19 +78,92 @@ Read critique files that were generated (only read files from critics that were 
 - $REVIEW_DIR/critique-tasks.md (always read)
 - $REVIEW_DIR/critique-consistency.md (read if $CAN_RUN_CONSISTENCY is true)
 
-For each issue raised by critics, mark it as:
-- VALID — genuine problem, supported by evidence in artifacts, actionable
-- NOISE — overly defensive, speculative, already addressed in artifacts, or outside critic's scope
+**Blue Team Filtering Protocol**
+
+**Your role:** Active defender. Critics are instructed to assume artifacts are flawed and hunt aggressively for problems. Your job is to validate each claim against actual artifact text before accepting it.
+
+**Validation Process (apply to each critic issue):**
+
+1. **Locate Evidence:** Find the exact artifact text the critic references. If the critic doesn't cite specific text, search for it yourself.
+
+2. **Verify Claim:** Does the artifact actually contain the flaw described?
+   - YES → Proceed to step 3
+   - NO → Mark as NOISE (critic misread or hallucinated)
+   - PARTIALLY → Check if artifact addresses it elsewhere
+
+3. **Check Coverage:** Search all relevant artifacts for contradicting evidence
+   - Is this already addressed in another section?
+   - Does design.md resolve what proposal.md left open?
+   - Do specs/ provide the detail the critic claims is missing?
+
+4. **Validate Severity:** Does the issue's impact match the critic's severity rating?
+   - CRITICAL: Blocks implementation OR contradicts existing specs OR solves wrong problem
+   - MAJOR: Significant rework needed OR creates technical debt OR missing key requirements
+   - MINOR: Polish, optimization, or nice-to-have improvements
+
+5. **Assess Actionability:** Can this be fixed with concrete changes?
+   - Vague complaints ("needs more detail") without specifying what detail → NOISE
+   - Specific gaps ("missing error handling for X scenario") → VALID
+
+**Mark each issue as:**
+- **VALID** — Verified in artifact text, within scope, severity justified, actionable
+- **NOISE** — One or more validation checks failed (see patterns below)
+
+**Common False Positive Patterns (mark as NOISE):**
+
+- **Speculation:** "This might cause issues if..." without evidence it will
+- **Out of scope:** Critiquing implementation details when only design exists, or questioning business decisions in technical artifacts
+- **Already addressed:** Issue raised about proposal.md but resolved in design.md or specs/
+- **Misreading:** Critic claims X is missing, but X is present in artifact
+- **Subjective preference:** "Should use pattern Y instead of Z" without technical justification
+- **Premature optimization:** Performance concerns without evidence of actual bottleneck
+- **Vague demands:** "Needs more detail" without specifying what's insufficient
+- **Scope creep:** Demanding features beyond the change's stated goals
+
+**Severity Downgrade Triggers:**
+
+- Critic marks CRITICAL but issue is fixable without redesign → Downgrade to MAJOR
+- Critic marks MAJOR but issue is cosmetic or stylistic → Downgrade to MINOR
+- Critic marks any severity but provides no evidence → Mark as NOISE
+
+**Examples:**
+
+✅ **VALID CRITICAL:** "Proposal states 'backward compatible' but design.md removes required field 'user_id' from API response (line 47). Existing clients will break."
+- Evidence: Specific line cited, contradiction verified
+- Severity justified: Breaking change contradicts compatibility claim
+- Actionable: Either restore field or revise compatibility claim
+
+❌ **NOISE:** "The authentication flow might have race conditions under high load."
+- Speculation: No evidence of actual race condition
+- Vague: Doesn't identify specific race condition scenario
+- Out of scope: Performance testing not part of design review
+
+✅ **VALID MAJOR:** "Tasks.md includes 'Implement caching layer' (task 7) but design.md has no caching architecture. Implementation will require design decisions not documented."
+- Evidence: Gap verified between tasks and design
+- Severity justified: Missing design will block implementation
+- Actionable: Add caching design section
+
+❌ **NOISE:** "Proposal doesn't mention monitoring strategy."
+- Already addressed: Check if design.md or specs/ cover monitoring
+- Scope: Monitoring may be handled by existing infrastructure
+- Vague: Doesn't specify what monitoring is needed
+
+✅ **VALID MINOR:** "API spec uses inconsistent naming: 'userId' in endpoint A, 'user_id' in endpoint B (specs/api.md lines 23, 67)."
+- Evidence: Specific inconsistency cited with line numbers
+- Severity justified: Cosmetic issue, doesn't block implementation
+- Actionable: Standardize naming convention
+
+**Confidence Assessment:**
+
+After filtering, assess your confidence in the verdict:
+- **HIGH:** Clear evidence for all VALID issues, multiple critics agree on related concerns, severity is unambiguous
+- **MEDIUM:** Some interpretation required, or critics disagree on severity, or limited artifact coverage (only 2-3 critics ran)
+- **LOW:** Weak evidence, heavy speculation from critics, or very few issues found (critics struggled to find problems)
 
 **Decision Rules:**
 - **STOP**: One or more VALID CRITICAL issues that represent fundamental flaws (contradicts existing specs, unsolvable problem, wrong problem being solved)
 - **REVISE**: One or more VALID CRITICAL issues (implementation blockers), OR 3+ VALID MAJOR issues
 - **GO**: Zero VALID CRITICAL issues AND fewer than 3 VALID MAJOR issues
-
-**Confidence Calculation:**
-- **HIGH**: Issues have clear evidence, multiple critics agree on related concerns, severity is unambiguous
-- **MEDIUM**: Issues have evidence but some interpretation required, or critics disagree on severity
-- **LOW**: Issues are speculative, evidence is weak, or critics found very little to critique
 
 Produce a verdict and write it to $REVIEW_DIR/verdict.md:
 ```
