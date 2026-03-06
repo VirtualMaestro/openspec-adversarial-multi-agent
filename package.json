@@ -1,0 +1,25 @@
+{
+  "name": "openspec-adversarial-multi-agent",
+  "version": "1.0.0",
+  "description": "Claude Code plugin for adversarial OpenSpec review",
+  "bin": {
+    "openspec-adversarial-multi-agent": "./index.js"
+  },
+  "files": [
+    "index.js",
+    "agents",
+    "skills"
+  ],
+  "keywords": [
+    "claude-code",
+    "openspec",
+    "plugin",
+    "adversarial-review"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/VirtualMaestro/openspec-adversarial-multi-agent.git"
+  }
+}

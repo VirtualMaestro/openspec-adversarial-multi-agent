@@ -22,8 +22,24 @@ Each critic independently analyzes the change artifacts and provides targeted fe
 
 ## Installation
 
-1. Clone or copy this repository into your Claude Code workspace
-2. Place the `agents/` folder in your `.claude/` directory:
+### Quick Install (Recommended)
+
+Run the NPX installer to automatically copy files to your `.claude/` directory:
+
+```bash
+npx openspec-adversarial-multi-agent
+```
+
+This will install:
+- 5 critic agent files to `~/.claude/agents/`
+- 1 skill file to `~/.claude/skills/openspec-review-change/`
+
+### Manual Installation
+
+If you prefer manual installation or the NPX method doesn't work:
+
+1. Clone this repository
+2. Copy the `agents/` folder contents to your `.claude/agents/` directory:
    ```
    .claude/
    ├── agents/
@@ -34,7 +50,7 @@ Each critic independently analyzes the change artifacts and provides targeted fe
    │   └── opsx-critic-consistency.md
    ```
 
-3. Place the `skills/` folder in your `.claude/` directory:
+3. Copy the `skills/` folder contents to your `.claude/skills/` directory:
    ```
    .claude/
    ├── skills/

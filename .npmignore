@@ -1,0 +1,9 @@
+# Exclude development and test files from npm package
+.git/
+.gitignore
+.vscode/
+.idea/
+test/
+*.test.js
+coverage/
+.DS_Store
