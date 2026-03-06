@@ -26,8 +26,8 @@ Each critic independently analyzes the change artifacts and provides targeted fe
 
 Run the NPX installer from your project root to install locally:
 
-```bash
 cd /path/to/your/project
+```bash
 npx openspec-adversarial-multi-agent
 ```
 
